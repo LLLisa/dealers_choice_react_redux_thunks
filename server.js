@@ -5,6 +5,7 @@ const { seedDb, Human, Company } = require('./db');
 const express = require('express');
 const app = express();
 const path = require('path');
+const faker = require('faker');
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.use('/client', express.static(path.join(__dirname, 'client')));

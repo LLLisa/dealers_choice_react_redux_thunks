@@ -1,26 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store from '../store';
-import Human from './Human';
+import { addHuman } from '../store';
 
-const HumanList = (props) => {
-  // console.log('props', props);
-  return (
-    <div>
-      <button>Add Human</button>
-      {props.humanList.map((human, i) => {
-        return (
-          <li key={i}>
-            {human.name} -{human.phone}
-          </li>
-        );
-      })}
-    </div>
-  );
+class HumanList extends React.Component {
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <button onClick={this.props.addOne}>Add Human</button>
+        {this.props.humans.map((human, i) => {
+          return <li key={i}>{human.name}</li>;
+        })}
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addOne: async () => {
+      await dispatch(addHuman());
+    },
+  };
 };
 
-const mapStateToProps = (state) => {
-  return { humanList: state.humanList };
-};
-
-export default connect(mapStateToProps)(HumanList);
+export default connect((state) => state, mapDispatchToProps)(HumanList);

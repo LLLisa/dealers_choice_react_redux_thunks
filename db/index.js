@@ -2,7 +2,8 @@
 const faker = require('faker');
 const Sequelize = require('sequelize');
 const db = new Sequelize(
-  process.env.DATABASE_URL || 'postgres://localhost/acme-react-redux',
+  process.env.DATABASE_URL ||
+    'postgres://localhost/dealers_choice_react_redux_thunks',
   { logging: false }
 );
 
