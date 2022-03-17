@@ -75,3 +75,25 @@ app.get('/api/companies', async (req, res, next) => {
     next(error);
   }
 });
+
+app.post('/api/companies', async (req, res, next) => {
+  try {
+    const newCompany = await Company.create({
+      name: faker.company.companyName(),
+      tagline: faker.company.bs(),
+    });
+    res.send(newCompany);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/companies/:doomed', async (req, res, next) => {
+  try {
+    const doomedCompany = await Company.findByPk(req.params.doomed);
+    await doomedCompany.destroy();
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});

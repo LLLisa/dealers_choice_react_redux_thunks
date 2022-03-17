@@ -1,17 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import HumanList from './HumanList';
-import { loadHumans } from '../store';
+import CompanyList from './CompanyList';
+import { loadHumans, loadCompanies } from '../store';
 
 class Main extends React.Component {
   componentDidMount() {
-    this.props.loadData();
+    this.props.initHumans();
+    this.props.initCompanies();
   }
 
   render() {
     return (
       <ul>
         <HumanList />
+        <CompanyList />
       </ul>
     );
   }
@@ -19,8 +22,11 @@ class Main extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: async () => {
+    initHumans: async () => {
       await dispatch(loadHumans());
+    },
+    initCompanies: async () => {
+      await dispatch(loadCompanies());
     },
   };
 };
