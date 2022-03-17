@@ -1,15 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addHuman } from '../store';
+import { addHuman, removeHuman } from '../store';
 
 class HumanList extends React.Component {
   render() {
     console.log(this.props);
     return (
       <div>
-        <button onClick={this.props.addOne}>Add Human</button>
+        <button style={{ margin: '1rem' }} onClick={this.props.addOne}>
+          Add Human
+        </button>
         {this.props.humans.map((human, i) => {
-          return <li key={i}>{human.name}</li>;
+          return (
+            <li key={i}>
+              {human.name}
+              <button
+                style={{ margin: '1rem' }}
+                onClick={() => this.props.removeOne(human)}
+              >
+                remove human
+              </button>
+            </li>
+          );
         })}
       </div>
     );
@@ -20,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addOne: async () => {
       await dispatch(addHuman());
+    },
+    removeOne: async (human) => {
+      await dispatch(removeHuman(human));
     },
   };
 };

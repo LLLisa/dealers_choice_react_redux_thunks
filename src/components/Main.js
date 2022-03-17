@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import HumanList from './HumanList';
 import { loadHumans } from '../store';
-import axios from 'axios';
 
 class Main extends React.Component {
   componentDidMount() {

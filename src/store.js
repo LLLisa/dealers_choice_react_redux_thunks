@@ -6,7 +6,7 @@ import axios from 'axios';
 //action types-----------------------------
 const LOAD = 'LOAD';
 const ADD = 'ADD';
-const DELETE = 'DELETE';
+const REMOVE = 'REMOVE';
 
 //action creators--------------------------
 export const load = (list) => {
@@ -25,19 +25,12 @@ export const add = (human) => {
 
 export const remove = (human) => {
   return {
-    type: DELETE,
+    type: REMOVE,
     human: human,
   };
 };
 
 //thunks-----------------------------------
-export const addHuman = () => {
-  return async (dispatch) => {
-    const newHuman = (await axios.post('/api/humans')).data;
-    dispatch(add(newHuman));
-  };
-};
-
 export const loadHumans = () => {
   return async (dispatch) => {
     const humans = (await axios.get('/api/humans')).data;
@@ -45,12 +38,21 @@ export const loadHumans = () => {
   };
 };
 
-//reducer----------------------------
-
-const initialState = {
-  humanList: [],
+export const addHuman = () => {
+  return async (dispatch) => {
+    const newHuman = (await axios.post('/api/humans')).data;
+    dispatch(add(newHuman));
+  };
 };
 
+export const removeHuman = (human) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/humans/${human.id}`);
+    dispatch(remove(human));
+  };
+};
+
+//reducer----------------------------
 const humanReducer = (humans = [], action) => {
   switch (action.type) {
     case LOAD: {
@@ -58,6 +60,9 @@ const humanReducer = (humans = [], action) => {
     }
     case ADD: {
       return [...humans, action.human];
+    }
+    case REMOVE: {
+      return humans.filter((x) => x.id !== action.human.id);
     }
   }
   return humans;
@@ -70,10 +75,3 @@ const reducer = combineReducers({
 const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 export default store;
-
-/*Remember, an action creator is a function that returns an object. A thunk, on the other hand, is a function that returns a function that takes dispatch as a parameter!  */
-
-//when something gets dispatched to reducer, if object it will go through
-//if function, thunk midware will call it and send the result to reducer
-
-//export thunks instead if action creators
