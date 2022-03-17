@@ -4,7 +4,6 @@ import { addHuman, removeHuman } from '../store';
 
 class HumanList extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <button style={{ margin: '1rem' }} onClick={this.props.addOne}>
