@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import HumanList from './HumanList';
 import CompanyList from './CompanyList';
-import { loadHumans, loadCompanies } from '../store';
+import { loadHumans } from '../store/human-store';
+import { loadCompanies } from '../store/company-store';
 
 class Main extends React.Component {
   componentDidMount() {

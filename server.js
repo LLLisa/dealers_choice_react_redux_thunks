@@ -8,8 +8,8 @@ const path = require('path');
 const faker = require('faker');
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
-app.use('/client', express.static(path.join(__dirname, 'client')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
+app.use('/', express.static(path.join(__dirname, '')));
 
 const init = async () => {
   try {
